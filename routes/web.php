@@ -101,3 +101,6 @@ Route::group(['middlewareGroups' => ['web']], function(){
 
     Route::get('print/receipt/{id}','AdminController@generatereceipt');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
