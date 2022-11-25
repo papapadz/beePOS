@@ -31,7 +31,7 @@
   </div>
   <div class="card-footer">
     <button id="btn_open_store" class="btn btn-primary">Open Registry</button>
-</div>
+  </div>
 </div>
 </div>
 @endsection

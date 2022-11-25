@@ -23,6 +23,7 @@ class CreatePeopleTable extends Migration
             $table->integer('citymun_id');
             $table->string('zipcode',4);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

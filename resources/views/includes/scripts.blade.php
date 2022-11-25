@@ -1,5 +1,5 @@
-<script src="{{ url('assets/bootstrap4/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{ url('assets/bootstrap4/js/popper.min.js')}}"></script>
+<script src="{{ url('assets/js/jquery-3.6.1.js')}}"></script>
+<script src="{{ url('assets/js/popper.min.js')}}"></script>
 <script src="{{ url('assets/bootstrap4/js/bootstrap.min.js')}}"></script>
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
@@ -10,4 +10,3 @@
 <script src="{{ url('assets/js/dataTables.jqueryui.min.js') }}"></script>
 
 <script src="{{ url('assets/js/moment.js') }}"></script>
-<script src="{{ url('assets/js/jquery-ui-1.12.1.js') }}"></script>

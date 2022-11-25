@@ -20,7 +20,9 @@ class CreateTblTransactionsTable extends Migration
             $table->unsignedBigInteger('perk_id')->nullable();
             $table->enum('is_pad',[0,1,2,3])->default(0);
             $table->float('cash_tendered',10,2);
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

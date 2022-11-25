@@ -79,7 +79,7 @@ class AdminController extends Controller
     }
 
     public static function viewMenu() {
-
+      
       $bb = GettersController::getBeginningBalance(0);
       $countUnpaid = GettersController::getUnpaidSales(0);
       $countCredit = GettersController::getUnpaidSales(2);

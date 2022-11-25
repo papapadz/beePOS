@@ -10,15 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('login');
+Route::get('/', function() {
+    return redirect()->route('view.menu');
 });
-
-Route::group(['middlewareGroups' => ['web']], function(){
-    Route::auth();
-
-    Route::post('menu', 'AdminController@checklogin');
+Route::group(['middleware' => ['auth']], function(){
+    
+    //Route::post('menu', 'AdminController@checklogin');
 
 	Route::get('menu', [
         'uses' => 'AdminController@viewMenu',
