@@ -20,7 +20,7 @@ class CreateTblProductsTable extends Migration
                 $table->foreign('product_category')->references('product_category_id')->on('tbl_product_categories')->onDelete('cascade');
             $table->integer('quantity')->default(1);
             $table->string('description',255);
-            $table->string('img_file',255);
+            $table->string('img_file',255)->default(asset('assets/img/default.jpg'));
             $table->unsignedBigInteger('company_id');
                 $table->foreign('company_id')->references('id')->on('shops')->onDelete('cascade');
             $table->timestamps();

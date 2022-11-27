@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth.app')
 
 
 @section('content')
@@ -20,7 +20,7 @@
                     <tr>
                         <td class="pid">{{$p->product_id}}</td>
                         <td>{{$p->product_name}}</td>
-                        <td>{{$p->category}}</td>
+                        <td>{{$p->category->category}}</td>
                         <td><?php echo number_format((float)$p->unit_price, 2, '.', ''); ?></td>
                         <td>
                             <button type="button" class="btn btn-sm btn-primary" onclick="editProduct('{{$p->product_id}}')"><i class="fa fa-edit"></i></button>
@@ -73,11 +73,13 @@
             <input type="text" id="inputpid" name="inputpid" hidden />
             <label>Product Name</label>
             <input type="text" class="form-control" name="product_name" id="product_name">
+            <label>Description</label>
+            <textarea class="form-control" name="description" id="description"></textarea>
             <div class="form-group">
               <label for="product_category">Product Category</label>
               <select class="form-control" name="product_category" id="product_category">
                 @foreach($prodCat as $cat)
-                <option value="{{$cat->category_id}}">{{$cat->category}}</option>
+                <option value="{{$cat->product_category_id}}">{{$cat->product_category_id}}</option>
                 <!-- 
                 <option value="1">Pasta</option>
                 <option value="2">Drinks</option>
@@ -89,8 +91,10 @@
                 @endforeach
               </select>
             </div>
+            <label>Unit Cost (PHP)</label>
+            <input type="number" class="form-control" name="unit_cost" id="unit_cost" min="1">
             <label>Unit Price (PHP)</label>
-            <input type="number" class="form-control" name="unit_price" id="unit_price"><hr>
+            <input type="number" class="form-control" name="unit_price" id="unit_price" min="1"><hr>
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="image" name="image">
                 <label class="custom-file-label" id="custom-file-label">Choose Image File</label>

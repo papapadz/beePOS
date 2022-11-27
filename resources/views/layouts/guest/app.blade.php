@@ -122,7 +122,7 @@
         -moz-osx-font-smoothing: grayscale;      
         }
     </style>
-
+    
     @yield('style')
 </head>
 <body>

@@ -11,7 +11,7 @@ class BeginningBalancesModel extends Model
     protected $table = 'tbl_beginning_balances';
 
     protected $fillable = [
-        'user_id', 'balance', 'cash_count', 'is_active'
+        'user_id', 'balance', 'cash_count', 'is_active', 'shop_id'
     ];
 
     public function user() {

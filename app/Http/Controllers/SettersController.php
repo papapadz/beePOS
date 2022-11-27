@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Session;
 use App\Http\Requests;
+use App\Http\Requests\StoreProduct;
 use DB;
 use FPDF;
 use App\ProductsModel as PRODUCTS;
@@ -75,37 +76,66 @@ class SettersController extends Controller
       } 
     }
 
-    public function setNewProduct(Request $req) {
-
-      $product = PRODUCTS::JOIN('tbl_product_prices','tbl_product_prices.price_id','=','tbl_products.unit_price_id')->FIND($req['inputpid']);
+    public function setNewProduct(StoreProduct $req) {
+      
+      //$product = PRODUCTS::JOIN('tbl_product_prices','tbl_product_prices.price_id','=','tbl_products.unit_price_id')->FIND($req['inputpid']);
+      $product = PRODUCTS::where([
+        ['product_id',$req['inputpid']],
+        ['company_id',Auth::User()->affiliation->shop_id]
+      ])->first();
 
       if(!$product) {
-        $productPrice = new PRODUCTPRICES;
-        $productPrice->unit_price = $req['unit_price'];
-        $productPrice->SAVE();
 
-        $product = new PRODUCTS;
-        $product->unit_price_id = $productPrice->price_id;
+        $newProduct = PRODUCTS::create([
+          'product_name' => $req['product_name'],
+          'product_category' => $req['product_category'],
+          'description' => $req['description'],
+          'company_id' => Auth::User()->affiliation->shop_id
+        ]);
+        
+        PRODUCTPRICES::create([
+          'product_id' => $newProduct->product_id,
+          'unit_cost' => $req['unit_cost'],
+          'unit_price' => $req['unit_price']
+        ]);
+        // $productPrice = new PRODUCTPRICES;
+        // $productPrice->unit_price = $req['unit_price'];
+        // $productPrice->SAVE();
+
+        //$product = new PRODUCTS;
+        //$product->unit_price_id = $productPrice->price_id;
 
       } else {
+        
+        $toUpdate = array(
+          'product_id' => $product->product_id
+        );
 
-        if($product->unit_price!=$req['unit_price']) {
-
-          $productPrice = new PRODUCTPRICES;
-          $productPrice->unit_price = $req['unit_price'];
-          $productPrice->SAVE();
-
-          $product->unit_price_id = $productPrice->price_id;
+        if($product->price->unit_price!=$req['unit_price'] && $product->price->unit_cost!=$req['unit_cost']) {
+            $unitprice = $req['unit_price'];
+            $unitcost = $req['unit_cost'];
+        } else if($product->price->unit_price!=$req['unit_price']) {
+            $unitprice = $req['unit_price'];
+            $unitcost = $product->price->unit_cost;
+        } else {
+          $unitprice = $product->price->unit_price;
+          $unitcost = $req['unit_cost'];
         }
+
+          PRODUCTPRICES::create([
+            'product_id' => $product->product_id,
+            'unit_cost' => $unitcost,
+            'unit_price' => $unitprice
+          ]);
       }
 
-      $product->product_name = $req['product_name'];
-      $product->product_category = $req['product_category'];
-      $product->SAVE();
+      // $product->product_name = $req['product_name'];
+      // $product->product_category = $req['product_category'];
+      // $product->SAVE();
 
       $img = $req->file('image');
 
-        if($img !== null) {
+      if($img !== null) {
           $input['image'] = $product->product_id.'.'.$img->getClientOriginalExtension();
           $destinationPath = public_path('/img/prod/');
           $img->move($destinationPath, $input['image']);
@@ -113,7 +143,7 @@ class SettersController extends Controller
           $p = PRODUCTS::FIND($product->product_id);
           $p->img_file = $input['image'];
           $p->SAVE();
-        }
+      }
         
       
       return redirect()->back();
@@ -229,10 +259,11 @@ class SettersController extends Controller
 
     public function setBeginningBalance(Request $req) {
 
-      $beginning = new BEGINNING;
-      $beginning->user_id = Auth::User()->id;
-      $beginning->balance = $req['bb'];
-      $beginning->SAVE();
+      BEGINNING::create([
+        'user_id' => Auth::User()->id,
+        'balance' => $req['bb'],
+        'shop_id' => Auth::User()->affiliation->shop_id
+      ]);
 
     }
 
@@ -360,16 +391,15 @@ class SettersController extends Controller
 
     public static function checkBeginningBalance($ddate) {
 
-      $beginning = BEGINNING::WHEREDATE('created_at','=',$ddate)->GET()->COUNT();
+      $beginning = BEGINNING::WHERE('shop_id',Auth::User()->affiliation->shop_id)->WHEREDATE('created_at','=',$ddate)->GET()->COUNT();
       
-      if($beginning==0) {
-        $bg = new BEGINNING;
-        $bg->user_id = Auth::User()->id;
-        $bg->balance = 0;
-        $bg->is_active = 1;
-        $bg->created_at = Carbon::parse($ddate)->toDateTimeString();
-        $bg->SAVE();
-      }
+      if($beginning==0)
+        BEGINNING::create([
+          'user_id' => Auth::User()->id,
+          'balance' => 0,
+          'is_active' => true,
+          'shop_id' => Auth::User()->affiliation->shop_id
+        ]);
     }
 
     public function addNewSalesReport(Request $req) {

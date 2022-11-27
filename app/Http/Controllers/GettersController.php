@@ -114,12 +114,12 @@ class GettersController extends Controller
     }
 
     public static function getBeginningBalance($dd) {
-
+      
       if($dd==0)
         $dnow = Carbon::now()->toDateString();
       else
         $dnow = $dd;
-      $bb = BEGINNING::WHEREDATE('created_at', '=', $dnow)->FIRST();
+      $bb = BEGINNING::WHERE('shop_id',Auth::User()->affiliation->shop_id)->WHEREDATE('created_at', '=', $dnow)->FIRST();
       return $bb;
     }
 

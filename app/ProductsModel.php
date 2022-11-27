@@ -21,7 +21,7 @@ class ProductsModel extends Model
     }
 
     public function price() {
-        return $this->hasOne(ProductPricesModel::class,'product_id','product_id')->latestOfMany();
+        return $this->hasOne(ProductPricesModel::class,'product_id','product_id')->latest();
     }
 
     public function category() {

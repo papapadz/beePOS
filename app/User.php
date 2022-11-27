@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->hasOne(Person::class,'person_id','id');
     }
 
-    public function affiliations() {
-        return $this->belongsTo(Affiliation::class,'user_id','id');
+    public function affiliation() {
+        return $this->hasOne(Affiliation::class,'user_id','id');
     }
     
     public function perkCards() {

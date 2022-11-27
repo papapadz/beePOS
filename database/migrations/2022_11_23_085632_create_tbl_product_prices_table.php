@@ -17,7 +17,7 @@ class CreateTblProductPricesTable extends Migration
             $table->bigIncrements('price_id');
             $table->unsignedBigInteger('product_id');
                 $table->foreign('product_id')->references('product_id')->on('tbl_products')->onDelete('cascade');
-            $table->double('cost_price',11,2);
+            $table->double('unit_cost',11,2);
             $table->double('unit_price',11,2);
             $table->timestamps();
             $table->softDeletes();

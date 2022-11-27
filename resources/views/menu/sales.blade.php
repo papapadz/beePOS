@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth.app')
 
 @section('content')
 <div class="card">
@@ -21,7 +21,7 @@
                 <td>{{$t->transaction_id}}</td>
                 <td>{{$totals['items'][$k]}}</td>
                 <td>PHP {{$totals['sum'][$k]}}</td>
-                <td>{{$t->last_name}}, {{$t->first_name}}</td>
+                <td>{{$t->user->person->last_name}}, {{$t->user->person->first_name}}</td>
                 <td>{{$t->created_at}}</td>
                     @if($t->is_paid==0)
                     <td style="background: #ff4d4d">

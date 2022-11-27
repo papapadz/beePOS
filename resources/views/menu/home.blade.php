@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth.app')
 
 @section('styles')
 <style type="text/css">
@@ -129,14 +129,14 @@
               @foreach($cat as $k => $c)
                 
                 @if($k==0)
-                <div class="tab-pane fade show active" id="cat{{$c->category_id}}" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade show active" id="cat{{$c->product_category_id}}" role="tabpanel" aria-labelledby="nav-profile-tab">
                 @else
-                <div class="tab-pane fade" id="cat{{$c->category_id}}" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade" id="cat{{$c->product_category_id}}" role="tabpanel" aria-labelledby="nav-profile-tab">
                 @endif
 
                 @forelse($arrCat[$k] as $p)
                   <a href="javascript:void(0)">
-                            <img class="rounded img-fluid mx-auto prod_pic_menu" id="{{$p->product_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$p->product_name}} - PHP {{$p->unit_price}}" src="{{$p->img_file}}">
+                            <img class="rounded img-fluid mx-auto prod_pic_menu" id="{{$p->product_id}}" data-toggle="tooltip" data-placement="bottom" title="{{$p->product_name}} - PHP {{$p->price->unit_price}}" src="{{$p->img_file}}">
                   </a>
                 @empty
                 There are no Items here right now

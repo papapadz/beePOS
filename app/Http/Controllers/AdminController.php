@@ -83,7 +83,7 @@ class AdminController extends Controller
       $bb = GettersController::getBeginningBalance(0);
       $countUnpaid = GettersController::getUnpaidSales(0);
       $countCredit = GettersController::getUnpaidSales(2);
-
+     
       if($bb) {
         
         if($bb->is_active==0)
@@ -91,11 +91,10 @@ class AdminController extends Controller
 
         $cat = PRODUCTCATEGORIES::ORDERBY('category')->GET();
        
-        $arrCat;
+        $arrCat = [];
         foreach($cat as $k => $c) {
-          $arrCat[$k] = PRODUCTS::JOIN('tbl_product_prices','tbl_product_prices.price_id','=','tbl_products.unit_price_id')
-            ->ORDERBY('product_name')
-            ->WHERE('product_category',$c->category_id)->GET();
+          $arrCat[$k] = PRODUCTS::ORDERBY('product_name')
+            ->WHERE('product_category',$c->product_category_id)->GET();
         }
 
         $promoList = DISCOUNTS::WHERE('is_active',1)->ORDERBY('promo_name')->GET();
@@ -116,10 +115,13 @@ class AdminController extends Controller
         $countUnpaid = GettersController::getUnpaidSales(0);
         $countCredit = GettersController::getUnpaidSales(2);
 
-        $transactions = TRANSACTIONS::SELECT('transaction_id','first_name','last_name','tbl_transactions.created_at','is_paid')
-          ->JOIN('tbl_users','tbl_users.id','=','tbl_transactions.user_id')
-          ->WHERE('is_paid','!=',2)
-          ->GET();
+        // $transactions = TRANSACTIONS::SELECT('transaction_id','first_name','last_name','tbl_transactions.created_at','is_paid')
+        //   ->JOIN('tbl_users','tbl_users.id','=','tbl_transactions.user_id')
+        //   ->WHERE('is_paid','!=',2)
+        //   ->GET();
+        
+        $transactions = TRANSACTIONS::where('is_pad','!=',2);
+        
         $totals = array();
         
         foreach ($transactions as $k => $t) {
@@ -166,12 +168,12 @@ class AdminController extends Controller
         $countUnpaid = GettersController::getUnpaidSales(0);
         $countCredit = GettersController::getUnpaidSales(2);
 
-        $products = PRODUCTS::SELECT()
-          ->JOIN('tbl_product_categories','tbl_product_categories.category_id','=','tbl_products.product_category')
-          ->JOIN('tbl_product_prices','tbl_product_prices.price_id','=','tbl_products.unit_price_id')
-          ->ORDERBY('product_name')
-          ->GET();
-
+        // $products = PRODUCTS::SELECT()
+        //   ->JOIN('tbl_product_categories','tbl_product_categories.category_id','=','tbl_products.product_category')
+        //   ->JOIN('tbl_product_prices','tbl_product_prices.price_id','=','tbl_products.unit_price_id')
+        //   ->ORDERBY('product_name')
+        //   ->GET();
+        $products = PRODUCTS::orderBy('product_name')->get();
         $prodCat = PRODUCTCATEGORIES::ORDERBY('category')->GET();
 
         return view('menu/products', compact('products','countUnpaid','countCredit','prodCat'));

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth.app')
 
 @section('content')
 <div class="card" style="margin-bottom: 1rem;">
