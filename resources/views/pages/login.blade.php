@@ -9,9 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     @include('includes.styles')
-    
-    <style type="text/css">
-        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
   width: 360px;
@@ -102,55 +101,45 @@
   color: #EF3B3A;
 }
 body {
-  background: #00e6e6; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #00e6e6, #00cccc);
-  background: -moz-linear-gradient(right, #00e6e6, #00cccc);
-  background: -o-linear-gradient(right, #00e6e6, #00cccc);
-  background: linear-gradient(to left, #00e6e6, #00cccc);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+.circular--square {
+  width: 100%;
+  border-radius: 50%; 
+}
     </style>
+    
 </head>
 <body>
-
-    @if ($message = Session::get('error'))
-   <div class="alert alert-danger alert-block">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    <strong>{{ $message }}</strong>
-   </div>
-   @endif
-
-   @if (count($errors) > 0)
-    <div class="alert alert-danger">
-     <ul>
-     @foreach($errors->all() as $error)
-      <li>{{ $error }}</li>
-     @endforeach
-     </ul>
+  <div class="login-page">
+    <div class="form">
+      <img class="circular--square" src="{{ $shop->shop_logo }}" />
+      <hr>
+      <h4>{{ $shop->name }}</h4>
+      <hr>
+      <form class="register-form" >
+        <input type="text" placeholder="name"/>
+        <input type="password" placeholder="password"/>
+        <input type="text" placeholder="email address"/>
+        <button>create</button>
+        <p class="message">Already registered? <a href="#">Sign In</a></p>
+      </form>
+      <form class="login-form" method="POST" action="{{ route('shop.login',['shop'=>$shop->shop_code]) }}">
+        @csrf
+        <input name="username" type="text" placeholder="username"/>
+        <input name="password" type="password" placeholder="password"/>
+        <button>login</button>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+      </form>
     </div>
-   @endif
-
-<div class="login-page">
-  <div class="form">
-    <img style="width: 250px;height: 200px;margin-bottom: 20px" src="{{url('img/logo/logo.jpg')}}">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form" method="POST" action="{{ url('menu') }}">
-        {{ csrf_field() }}
-      <input name="username" type="text" placeholder="username"/>
-      <input name="password" type="password" placeholder="password"/>
-      <button>login</button>
-      <!--<p class="message">Not registered? <a href="#">Create an account</a></p>-->
-    </form>
   </div>
-</div>
 </body>
  @include('includes.scripts')
+ <script>
+  let palette = '{{ $color }}'
+  console.log('{{ $color }}')
+  document.body.style.backgroundColor = palette
+</script>
 </html>

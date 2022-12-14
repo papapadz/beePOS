@@ -8,12 +8,12 @@
     <title>Point of Sale System</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    @include('includes.styles')
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- @include('includes.styles') --}}
 
     @yield('styles')
     
-    <style type="text/css">
+    {{-- <style type="text/css">
 
         body {
           background: #00e6e6; /* fallback for old browsers */
@@ -43,11 +43,12 @@
           padding-top: 1rem;
         }
         
-    </style>
+    </style> --}}
 
 </head>
 
 <body id="main-body">
+  {{-- 
 <nav id="pos-nav" class="navbar navbar-expand-lg">
   <a class="navbar-brand" href="#">
     <img src="{{ url('img/logo/logo.jpg') }}" width="30" height="30" alt="logo">
@@ -96,10 +97,24 @@
         </div>
       </li>   
     </ul>
-  </div>
-</nav>
+  </div> 
+</nav>--}}
 
-<div id='main-container' class="container-fluid" >
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <div class="navbar-nav">
+  <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+  <a class="nav-item nav-link" href="#">Features</a>
+  <a class="nav-item nav-link" href="#">Pricing</a>
+  <a class="nav-item nav-link disabled" href="#">Disabled</a>
+  </div>
+</div>
+</nav>
+<div id='app' class="container-fluid" >
 @yield('content')
 
 </div>
@@ -114,11 +129,13 @@
     echo '<a style="padding:1px" class="text-muted" href="https://fb.me/binarybee.solutions" target="_blank">&copy; <b>Binary Bee IT Solutions and Services 2019</b>. <i>All rights reserved.</i></a>';
   
   ?>
-    @include('includes.scripts')
-
-    <script type="text/javascript">
-        var authUserLevel = '{{ Auth::User()->affiliation->role }}'
-
+    {{-- @include('includes.scripts') --}}
+    <script src="{{ asset('js/app.js') }}" defer ></script>
+    <script>
+      console.log('{{ Auth::User() }}')
+    </script>
+    {{-- <script type="text/javascript">
+        var authUserLevel = 1
         if(authUserLevel == 0) {
             $('#itemNotifs').hide();
             $('#itemMessages').hide();
@@ -274,6 +291,6 @@
             }
         );
     }
-    </script>
+    </script> --}}
 @yield('script')
 </html>

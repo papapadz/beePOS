@@ -99,7 +99,8 @@ class AdminController extends Controller
 
         $promoList = DISCOUNTS::WHERE('is_active',1)->ORDERBY('promo_name')->GET();
 
-            return view('menu/home', compact('cat','arrCat','promoList','countUnpaid','countCredit'));    
+            return redirect()->route('view.menu');
+            // view('menu/home', compact('cat','arrCat','promoList','countUnpaid','countCredit'));    
       }
       return view('welcome', compact('countUnpaid','countCredit'));
     }

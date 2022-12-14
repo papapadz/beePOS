@@ -250,7 +250,7 @@
                 items.push(id);
 
                 $.ajax ({
-                  url : '{{ url("getters/product/get") }}'
+                  url : '{{ route("get.product") }}'
                   ,method : 'GET'
                   ,data: { id:id }
                   ,cache : false
@@ -319,7 +319,7 @@
 
 
               $.ajax ({
-                url : '{{ url("sales/new/save") }}'
+                url : '{{ route("sales.new") }}'
                 ,method : 'GET'
                 ,data: thisform
                 ,cache : false
@@ -344,7 +344,7 @@
 
           var tid = $('#inputTransID').val();
               $.ajax ({
-                url : '{{ url("sales/add/items/save?") }}'+thisform
+                url : '{{ route("sales.save.item?") }}'+thisform
                 ,method : 'GET'
                 ,data: { tid:tid }
                 ,cache : false

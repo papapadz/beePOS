@@ -51,7 +51,7 @@
                 if(c) {
 
                     $.ajax ({
-                    url : '{{ url("beginning-balance/set/save") }}'
+                    url : '{{ route("set.beginningbalance") }}'
                     ,method : 'GET'
                     ,data: {bb:bb}
                     ,cache : false

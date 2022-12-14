@@ -10,7 +10,7 @@
       <button>create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
-    <form class="login-form" method="POST" action="{{ url('login') }}">
+    <form class="login-form" method="POST" action="{{ url('{shop}/login') }}">
         {{ csrf_field() }}
       <input name="username" type="text" placeholder="username"/>
       <input name="password" type="password" placeholder="password"/>
