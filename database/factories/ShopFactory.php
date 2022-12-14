@@ -24,6 +24,6 @@ $factory->define(Shop::class, function (Faker $faker) {
         'email' => $faker->email,
         'contact_no' => $faker->e164PhoneNumber,
         'shop_code' => $shop_code,
-        'shop_logo' => $faker->imageUrl($width = 640, $height = 480)
+        'shop_logo' => 'http://vitorials.net/wp-content/uploads/2019/09/Letter-A-Logo-Design-Final-Artwork.jpg'
     ];
 });

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Shop;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,8 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            SuperAdminSeeder::class,
             InitSeeder::class
-            //SuperAdminSeeder::class
         ]);
     }
 }
