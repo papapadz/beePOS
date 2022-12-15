@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="row container-fluid card-deck">
-            <div class="badgeCat" @mouseover="catHover" @mouseout="catHoverOut" @click="catClick(category[0].product_category)" v-for="category in categories">
+            <div class="badgeCat" @mouseover="catHover" @mouseout="catHoverOut" @click="catClick(category[0].product_category)" v-for="category in getCategories">
                 <center>
                     {{ category[0]['category']['category'] }}
                 </center>
@@ -10,7 +10,7 @@
         <hr/>
         <div class="row">
             <div class="col-8 h-100">
-                <MenuList :products=products></MenuList>
+                <MenuList :products=getProducts></MenuList>
             </div>
             <div class="col-4"><Cart /></div>
         </div>
@@ -36,19 +36,17 @@ export default {
     Cart,
     MenuList
   },
-  props: ['shop','apiURL'],
+  props: ['shop','url'],
   data() {
     return {
-        categories: [],
-        products: [],
+        allProducts: [],
     }
   },
   mounted() {
     store.dispatch('init', {
-        apiURL: this.apiURL,
-        shop: this.shop
+        apiURL: this.url,
+        shop: JSON.parse(this.shop)
     })
-    
     // var self = this
     // axios(apiURL+shop+'/product/category/shop')
     //     .then(function (response) {
@@ -64,6 +62,14 @@ export default {
     //     'products': this.products
     // }) 
   },   
+  computed: {
+    getCategories() {
+        return store.getters.categories
+    },
+    getProducts() {
+        return store.getters.products.filtered
+    }
+  },
   methods: {
     catHover(e) {
             e.target.classList.remove('border-disabled')
@@ -74,7 +80,8 @@ export default {
         e.target.classList.add('border-disabled')
     },
     catClick(cat) {
-        this.products = store.getters.products.filter(product => product.product_category == cat)
+        //this.products = store.getters.products.filter(product => product.product_category == cat)
+        store.dispatch('filterCat',cat)
     }
   }
 }

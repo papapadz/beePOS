@@ -2292,10 +2292,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../store/store */ "./resources/js/store/store.js");
 /* harmony import */ var vue_awesome_icons_plus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-awesome/icons/plus */ "./node_modules/vue-awesome/icons/plus.js");
 /* harmony import */ var vue_awesome_icons_minus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-awesome/icons/minus */ "./node_modules/vue-awesome/icons/minus.js");
-/* harmony import */ var vue_awesome_icons_shopping_cart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-awesome/icons/shopping-cart */ "./node_modules/vue-awesome/icons/shopping-cart.js");
-/* harmony import */ var vue_awesome_icons_money_bill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-awesome/icons/money-bill */ "./node_modules/vue-awesome/icons/money-bill.js");
-
-
 
 
 
@@ -2354,19 +2350,17 @@ __webpack_require__.r(__webpack_exports__);
     Cart: _Cart_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     MenuList: _MenuList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['shop', 'apiURL'],
+  props: ['shop', 'url'],
   data: function data() {
     return {
-      categories: [],
-      products: []
+      allProducts: []
     };
   },
   mounted: function mounted() {
     store.dispatch('init', {
-      apiURL: this.apiURL,
-      shop: this.shop
+      apiURL: this.url,
+      shop: JSON.parse(this.shop)
     });
-
     // var self = this
     // axios(apiURL+shop+'/product/category/shop')
     //     .then(function (response) {
@@ -2383,6 +2377,14 @@ __webpack_require__.r(__webpack_exports__);
     // }) 
   },
 
+  computed: {
+    getCategories: function getCategories() {
+      return store.getters.categories;
+    },
+    getProducts: function getProducts() {
+      return store.getters.products.filtered;
+    }
+  },
   methods: {
     catHover: function catHover(e) {
       e.target.classList.remove('border-disabled');
@@ -2393,9 +2395,8 @@ __webpack_require__.r(__webpack_exports__);
       e.target.classList.add('border-disabled');
     },
     catClick: function catClick(cat) {
-      this.products = store.getters.products.filter(function (product) {
-        return product.product_category == cat;
-      });
+      //this.products = store.getters.products.filter(product => product.product_category == cat)
+      store.dispatch('filterCat', cat);
     }
   }
 });
@@ -2438,7 +2439,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "fixedElement"
+    staticClass: "fixedElement d-flex flex-column"
   }, [_c("div", {
     staticClass: "h-100 scrollable"
   }, [_c("ul", {
@@ -2483,34 +2484,22 @@ var render = function render() {
       }
     })], 1)])]), _vm._v(" "), _c("small", [_vm._v(_vm._s(parseFloat(item.total_price).toFixed(2)))])]);
   }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "fixedBottom d-flex"
+    staticClass: "fixedBottom"
   }, [_c("div", {
-    staticClass: "d-flex flex-row"
-  }, [_c("div", {
-    staticClass: "p-2"
-  }, [_c("div", {
-    staticClass: "d-flex flex-column"
-  }, [_c("div", {
-    staticClass: "p-2"
-  }, [_c("v-icon", {
-    attrs: {
-      name: "shopping-cart",
-      scale: "5"
-    }
-  }), _c("span", {
-    staticClass: "badge badge-warning ml-2"
-  }, [_c("p", {
-    staticClass: "h3"
-  }, [_vm._v(_vm._s(_vm.cartDetails.totalQty))])])], 1), _vm._v(" "), _c("div", {
-    staticClass: "p-2 d-flex justify-content-center"
-  }, [_c("h4", [_vm._v(_vm._s(_vm.cartDetails.totalAmt))])])])]), _vm._v(" "), _c("div", {
-    staticClass: "p-2 justify-content-end w-100",
-    style: {
-      border: "solid"
-    }
-  })])])]);
+    staticClass: "pl-2"
+  }, [_vm._v("Qty: " + _vm._s(_vm.cartDetails.totalQty))]), _vm._v(" "), _c("div", {
+    staticClass: "pl-2"
+  }, [_c("h2", [_vm._v("Total: " + _vm._s(_vm.cartDetails.totalAmt))])]), _vm._v(" "), _vm._m(0)])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p2 d-flex justify-content-center"
+  }, [_c("button", {
+    staticClass: "btn btn-success w-100"
+  }, [_vm._v("Checkout")])]);
+}];
 render._withStripped = true;
 
 
@@ -2532,7 +2521,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("section", [_c("div", {
     staticClass: "row container-fluid card-deck"
-  }, _vm._l(_vm.categories, function (category) {
+  }, _vm._l(_vm.getCategories, function (category) {
     return _c("div", {
       staticClass: "badgeCat",
       on: {
@@ -2549,7 +2538,7 @@ var render = function render() {
     staticClass: "col-8 h-100"
   }, [_c("MenuList", {
     attrs: {
-      products: _vm.products
+      products: _vm.getProducts
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-4"
@@ -8949,7 +8938,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-circle.btn-xl {\r\n\t\t\twidth: 50px;\r\n\t\t\theight: 50px;\r\n\t\t\tpadding: 13px 18px;\r\n\t\t\tborder-radius: 60px;\r\n\t\t\ttext-align: center;\n}\n.list-group-item:hover .sliderButton {\r\n        transition: 1s;\r\n        right: 0;\n}\n.sliderButton {\r\n        position: fixed;\r\n        right: -100px;\r\n        width: 100px;\r\n        transition: 1s;\n}\n.scrollable {\r\n        overflow-y: scroll;\n}\n.fixedElement {\r\n        background-color: #c0c0c0;\r\n        position:fixed;\r\n        top:0;\r\n        width:100%;\r\n        z-index:100;\r\n        height: 100%;\n}\n.fixedBottom {\r\n        border-top: solid;\r\n        background-color: white;\r\n        position:absolute;\r\n        bottom: 0px;\r\n        left: 0px;\r\n        right: 0px;\r\n        height: 10rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-circle.btn-xl {\r\n\t\t\twidth: 50px;\r\n\t\t\theight: 50px;\r\n\t\t\tpadding: 13px 18px;\r\n\t\t\tborder-radius: 60px;\r\n\t\t\ttext-align: center;\n}\n.list-group-item:hover .sliderButton {\r\n        transition: 1s;\r\n        right: 0;\n}\n.sliderButton {\r\n        position: fixed;\r\n        right: -100px;\r\n        width: 100px;\r\n        transition: 1s;\n}\n.scrollable {\r\n        overflow-y: scroll;\n}\n.fixedElement {\r\n        background-color: #c0c0c0;\r\n        position:fixed;\r\n        top:0;\r\n        width:100%;\r\n        z-index:100;\r\n        height: 100%;\n}\n.fixedBottom {\r\n        border-top: solid;\r\n        background-color: white;\r\n        height: 10rem;\n}\r\n", ""]);
 
 // exports
 
@@ -41066,33 +41055,6 @@ _components_Icon__WEBPACK_IMPORTED_MODULE_0__["default"].register({
 
 /***/ }),
 
-/***/ "./node_modules/vue-awesome/icons/money-bill.js":
-/*!******************************************************!*\
-  !*** ./node_modules/vue-awesome/icons/money-bill.js ***!
-  \******************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Icon */ "./node_modules/vue-awesome/components/Icon.js");
-
-
-_components_Icon__WEBPACK_IMPORTED_MODULE_0__["default"].register({
-  'money-bill': {
-    width: 640,
-    height: 512,
-    paths: [
-      {
-        d: 'M608 64c17.7 0 32 14.3 32 32v320c0 17.7-14.3 32-32 32h-576c-17.7 0-32-14.3-32-32v-320c0-17.7 14.3-32 32-32h576zM48 400h64c0-35.3-28.7-64-64-64v64zM48 176c35.3 0 64-28.7 64-64h-64v64zM320 352c44.2 0 80-43 80-96 0-53-35.8-96-80-96s-80 43-80 96c0 53 35.8 96 80 96zM592 400v-64c-35.3 0-64 28.7-64 64h64zM592 176v-64h-64c0 35.3 28.7 64 64 64z'
-      }
-    ]
-  }
-})
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-awesome/icons/plus.js":
 /*!************************************************!*\
   !*** ./node_modules/vue-awesome/icons/plus.js ***!
@@ -41112,33 +41074,6 @@ _components_Icon__WEBPACK_IMPORTED_MODULE_0__["default"].register({
     paths: [
       {
         d: 'M416 208c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32h-144v144c0 17.7-14.3 32-32 32h-32c-17.7 0-32-14.3-32-32v-144h-144c-17.7 0-32-14.3-32-32v-32c0-17.7 14.3-32 32-32h144v-144c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32v144h144z'
-      }
-    ]
-  }
-})
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-awesome/icons/shopping-cart.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/vue-awesome/icons/shopping-cart.js ***!
-  \*********************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Icon */ "./node_modules/vue-awesome/components/Icon.js");
-
-
-_components_Icon__WEBPACK_IMPORTED_MODULE_0__["default"].register({
-  'shopping-cart': {
-    width: 576,
-    height: 512,
-    paths: [
-      {
-        d: 'M528.1 301.3c-2.5 10.9-12.2 18.7-23.4 18.7h-293.1l6.5 32h268.4c15.4 0 26.8 14.3 23.4 29.3l-5.5 24.3c18.7 9.1 31.6 28.2 31.6 50.4 0 30.9-25.1 56-56 56s-56-25.1-56-56c0-15.7 6.4-29.8 16.8-40h-209.6c10.4 10.2 16.8 24.3 16.8 40 0 30.9-25.1 56-56 56s-56-25.1-56-56c0-20.8 11.3-38.9 28.1-48.6l-70.2-343.4h-69.9c-13.3 0-24-10.7-24-24v-16c0-13.3 10.7-24 24-24h102.5c11.4 0 21.2 8 23.5 19.2l9.2 44.8h392.8c15.4 0 26.8 14.3 23.4 29.3z'
       }
     ]
   }
@@ -55095,7 +55030,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     shop: {},
     apiURL: '',
     categories: [],
-    products: [],
+    products: {
+      all: [],
+      filtered: []
+    },
     cart: {
       totalAmt: 0.00,
       totalQty: 0,
@@ -55106,15 +55044,19 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     init: function init(state, data) {
       state.shop = data.shop;
       state.categories = data.categories;
-      state.products = data.products;
+      state.products.all = data.products;
+      state.products.filtered = data.products;
     },
     addToCart: function addToCart(state, data) {
       state.cart = data;
+    },
+    setProducts: function setProducts(state, data) {
+      state.products.filtered = data;
     }
   },
   actions: {
     init: function init(context, data) {
-      axios(data.apiURL + data.shop.shop_code + '/product/category/shop').then(function (response) {
+      axios(data.apiURL + '/' + data.shop.shop_code + '/product/category/shop').then(function (response) {
         var categories = response.data;
         var products = [];
         categories.forEach(function (cat) {
@@ -55150,7 +55092,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           'total_price': total_price
         };
       } else {
-        product = store.getters.products.find(function (product) {
+        product = store.getters.products.all.find(function (product) {
           return product.product_id == product_id;
         });
         total_price = qty * product.price.unit_price;
@@ -55200,6 +55142,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         }, 0),
         items: tempCart
       });
+    },
+    filterCat: function filterCat(context, cat) {
+      context.commit('setProducts', store.getters.products.all.filter(function (product) {
+        return product.product_category == cat;
+      }));
     }
   },
   getters: {

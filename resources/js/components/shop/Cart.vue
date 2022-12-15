@@ -1,5 +1,5 @@
 <template>
-    <div class="fixedElement">
+    <div class="fixedElement d-flex flex-column">
         <div class="h-100 scrollable">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action flex-column align-items-start "  v-for="item in getCartItems" :key="item.product_id">
@@ -14,17 +14,11 @@
                 </li>
             </ul>
         </div>
-        <div class="fixedBottom d-flex">
-            <div class="d-flex flex-row">
-                <div class="p-2">
-                    <div class="d-flex flex-column">
-                        <div class="p-2">
-                            <v-icon name="shopping-cart" scale="5"/><span class="badge badge-warning ml-2"><p class="h3">{{ cartDetails.totalQty }}</p></span>
-                        </div>
-                        <div class="p-2 d-flex justify-content-center"><h4>{{ cartDetails.totalAmt }}</h4></div>
-                    </div>
-                </div>
-                <div class="p-2 justify-content-end w-100" :style="{ 'border': 'solid' }" ></div>
+        <div class="fixedBottom">
+            <div class="pl-2">Qty: {{ cartDetails.totalQty }}</div>
+            <div class="pl-2"><h2>Total: {{ cartDetails.totalAmt }}</h2></div>
+            <div class="p2 d-flex justify-content-center">
+                <button class="btn btn-success w-100">Checkout</button>
             </div>
         </div>
     </div>
@@ -62,10 +56,6 @@
     .fixedBottom {
         border-top: solid;
         background-color: white;
-        position:absolute;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
         height: 10rem;
     }
 </style>
@@ -74,8 +64,6 @@
 import { store } from '../../store/store';
 import 'vue-awesome/icons/plus'
 import 'vue-awesome/icons/minus'
-import 'vue-awesome/icons/shopping-cart'
-import 'vue-awesome/icons/money-bill'
 
 export default {
     data() {
@@ -105,7 +93,6 @@ export default {
             this.$forceUpdate()
         },
         removeFromCart(product_id) {
-
             store.dispatch('removeFromCart',product_id)
             this.$forceUpdate()
         }

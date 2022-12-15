@@ -17,7 +17,10 @@ export const store = new Vuex.Store({
         shop: {},
         apiURL: '',
         categories: [],
-        products: [],
+        products: {
+            all: [],
+            filtered: []
+        },
         cart: {
             totalAmt: 0.00,
             totalQty: 0,
@@ -28,15 +31,19 @@ export const store = new Vuex.Store({
         init(state, data) {
             state.shop = data.shop
             state.categories =  data.categories
-            state.products =  data.products
+            state.products.all =  data.products
+            state.products.filtered =  data.products
         },
         addToCart(state, data) {
             state.cart = data
         },
+        setProducts(state, data) {
+            state.products.filtered = data
+        }
     },
     actions: {
         init(context, data) {
-            axios(data.apiURL+data.shop.shop_code+'/product/category/shop')
+            axios(data.apiURL+'/'+data.shop.shop_code+'/product/category/shop')
             .then(function (response) {
                 const categories = response.data
                 let products = []
@@ -71,7 +78,7 @@ export const store = new Vuex.Store({
                     'total_price': total_price
                 }
             } else {
-                product = store.getters.products.find(product => product.product_id == product_id) 
+                product = store.getters.products.all.find(product => product.product_id == product_id) 
                 total_price = qty*product.price.unit_price
                 tempCart.push({
                     'product_id': product.product_id,
@@ -113,6 +120,9 @@ export const store = new Vuex.Store({
                 items: tempCart
             })
             
+        },
+        filterCat(context, cat) {
+            context.commit('setProducts',store.getters.products.all.filter(product => product.product_category == cat))
         }
     },
     getters: {

@@ -4,7 +4,7 @@
 @endpush
 
 @section('content')
-<shop-index shop="{{ $shop }}" apiURL="{{ url('api') }}"></shop-index>
+<shop-index shop="{{ $shop }}" url="{!! url('api') !!}"></shop-index>
 @endsection
 
 @push('scripts')
