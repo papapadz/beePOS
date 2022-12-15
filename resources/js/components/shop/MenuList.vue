@@ -6,6 +6,7 @@
             <div class="card__image" v-bind:style="{ 'background-image': 'url('+product.img_file+')' }"></div>
             <div class="card__content">
                 <div class="card__title">{{ product.product_name }}</div>
+                <small>{{ product.price.unit_price }}</small>
             </div>
             </div>
         </li>

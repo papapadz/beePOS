@@ -14,7 +14,9 @@ window.store = store
 /** EventHub */
 import EventHub from 'vue-event-hub';
 Vue.use(EventHub);
-
+/** Vue-Awesome */
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('v-icon', Icon)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

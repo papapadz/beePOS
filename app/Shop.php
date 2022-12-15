@@ -22,6 +22,6 @@ class Shop extends Model
     }
 
     public function products() {
-        return $this->hasMany(ProductsModel::class,'company_id','id')->with('category');
+        return $this->hasMany(ProductsModel::class,'company_id','id')->with(['category','price']);
     }
 }

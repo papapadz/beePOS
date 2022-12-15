@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Shop;
 use App\ProductCategoryModel;
 use App\ProductsModel;
+use App\ProductPricesModel;
 
 class InitSeeder extends Seeder
 {

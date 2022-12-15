@@ -36,6 +36,7 @@ export default {
     Cart,
     MenuList
   },
+  props: ['shop','apiURL'],
   data() {
     return {
         categories: [],
@@ -43,21 +44,25 @@ export default {
     }
   },
   mounted() {
-    var self = this
-    axios(store.getters.apiURL+'/kohlerLehnerAndBode/product/category/shop')
-        .then(function (response) {
-            self.categories = response.data
-            console.log(self.categories)
-            self.categories.forEach(function(cat) {
-                cat.forEach(function(prod) {
-                    self.products.push(prod)
-                })
-            })
-        });
-    store.commit('setShopProducts', {
-        'categories': this.categories,
-        'products': this.products
-    }) 
+    store.dispatch('init', {
+        apiURL: this.apiURL,
+        shop: this.shop
+    })
+    
+    // var self = this
+    // axios(apiURL+shop+'/product/category/shop')
+    //     .then(function (response) {
+    //         self.categories = response.data
+    //         self.categories.forEach(function(cat) {
+    //             cat.forEach(function(prod) {
+    //                 self.products.push(prod)
+    //             })
+    //         })
+    //     });
+    // store.commit('setShopProducts', {
+    //     'categories': this.categories,
+    //     'products': this.products
+    // }) 
   },   
   methods: {
     catHover(e) {

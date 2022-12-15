@@ -13,9 +13,9 @@ class ProductsController extends Controller
         return CATEGORY::orderBy('category')->where()->get()->with('products');
     }
 
-    public function getCategoryByShop($shop) {
-
-        $shop = Shop::where('shop_code',$shop)->first();
+    public function getCategoryByShop($code) {
+        
+        $shop = Shop::where('shop_code',$code)->first();
         
         $categories = [];
 
