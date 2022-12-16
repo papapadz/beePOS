@@ -15,10 +15,14 @@
             </ul>
         </div>
         <div class="fixedBottom">
-            <div class="pl-2">Qty: {{ cartDetails.totalQty }}</div>
-            <div class="pl-2"><h2>Total: {{ cartDetails.totalAmt }}</h2></div>
-            <div class="p2 d-flex justify-content-center">
-                <button class="btn btn-success w-100">Checkout</button>
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column">
+                    <div class="pl-2 align-self-stretch">Qty: {{ cartDetails.totalQty }}</div>
+                    <div class="pl-2 align-self-stretch"><h2>Total: {{ cartDetails.totalAmt }}</h2></div>
+                </div>
+                <div class="d-flex align-items-end">
+                    <button class="btn btn-success w-100">Checkout</button>
+                </div>
             </div>
         </div>
     </div>
@@ -49,8 +53,9 @@
         background-color: #c0c0c0;
         position:fixed;
         top:0;
-        width:100%;
-        z-index:100;
+        right:0;
+        bottom: 0;
+        width:300px;
         height: 100%;
     }
     .fixedBottom {
