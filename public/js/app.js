@@ -2441,7 +2441,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "fixedElement d-flex flex-column"
   }, [_c("div", {
-    staticClass: "h-100 scrollable"
+    staticClass: "h-100"
   }, [_c("ul", {
     staticClass: "list-group"
   }, _vm._l(_vm.getCartItems, function (item) {
@@ -8942,7 +8942,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-circle.btn-xl {\r\n\t\t\twidth: 50px;\r\n\t\t\theight: 50px;\r\n\t\t\tpadding: 13px 18px;\r\n\t\t\tborder-radius: 60px;\r\n\t\t\ttext-align: center;\n}\n.list-group-item:hover .sliderButton {\r\n        transition: 1s;\r\n        right: 0;\n}\n.sliderButton {\r\n        position: fixed;\r\n        right: -100px;\r\n        width: 100px;\r\n        transition: 1s;\n}\n.scrollable {\r\n        overflow-y: scroll;\n}\n.fixedElement {\r\n        background-color: #c0c0c0;\r\n        position:fixed;\r\n        top:0;\r\n        right:0;\r\n        bottom: 0;\r\n        width:300px;\r\n        height: 100%;\n}\n.fixedBottom {\r\n        border-top: solid;\r\n        background-color: white;\r\n        height: 10rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-circle.btn-xl {\r\n\t\t\twidth: 50px;\r\n\t\t\theight: 50px;\r\n\t\t\tpadding: 13px 18px;\r\n\t\t\tborder-radius: 60px;\r\n\t\t\ttext-align: center;\n}\n.list-group-item:hover .sliderButton {\r\n        transition: 1s;\r\n        right: 0;\n}\n.sliderButton {\r\n        position: fixed;\r\n        right: -100px;\r\n        width: 100px;\r\n        transition: 1s;\n}\n.scrollable {\r\n        overflow-y: scroll;\n}\n.fixedElement {\r\n        background-color: #c0c0c0;\r\n        position:fixed;\r\n        top:0;\r\n        right:0;\r\n        bottom: 0;\r\n        width: 20%;\r\n        height: 100%;\n}\n.fixedBottom {\r\n        border-top: solid;\r\n        background-color: white;\r\n        height: 10rem;\r\n        width: 100%;\n}\r\n", ""]);
 
 // exports
 

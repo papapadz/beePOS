@@ -12,6 +12,6 @@ class Person extends Model
     protected $fillable = ['lastname','firstname','middlename','birthdate','address','citymun_id','zipcode'];
 
     public function user() {
-        return $this->belongsTo(User::class,'person_id','id');
+        return $this->belongsTo(User::class,'id','person_id');
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="fixedElement d-flex flex-column">
-        <div class="h-100 scrollable">
+        <div class="h-100">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action flex-column align-items-start "  v-for="item in getCartItems" :key="item.product_id">
                     <div class="d-flex w-100 justify-content-between">
@@ -55,13 +55,14 @@
         top:0;
         right:0;
         bottom: 0;
-        width:300px;
+        width: 20%;
         height: 100%;
     }
     .fixedBottom {
         border-top: solid;
         background-color: white;
         height: 10rem;
+        width: 100%;
     }
 </style>
     

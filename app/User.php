@@ -35,11 +35,11 @@ class User extends Authenticatable
     ];
 
     public function person() {
-        return $this->hasOne(Person::class,'person_id','id');
+        return $this->hasOne(Person::class,'id','person_id');
     }
 
     public function affiliation() {
-        return $this->hasOne(Affiliation::class,'user_id','id');
+        return $this->hasOne(Affiliation::class,'user_id','id')->with('shop');
     }
     
     public function perkCards() {

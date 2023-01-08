@@ -28,4 +28,6 @@ Route::group(['prefix' => 'beePOSmobile'], function() {
     Route::get('test',function() {
         return 'ASDF';
     });
+    
+    Route::get('login', 'APIController@mobileLogin')->middleware('cors');
 }); 
