@@ -11,9 +11,9 @@
 |
 */
 
-Auth::routes();
+    Auth::routes();
     Route::get('/', function() {
-        return redirect()->route('view.menu');
+        return view('landing');
     });
     //Route::get('home', 'HomeController@index')->name('home');
     

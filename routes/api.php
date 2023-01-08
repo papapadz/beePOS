@@ -17,11 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 Route::group(['prefix' => '{shop}'], function() {
     Route::group(['prefix' => 'product'], function() {
         Route::get('all','ProductsController@all');
         Route::get('category/shop','ProductsController@getCategoryByShop');
     });
 });
+
+Route::group(['prefix' => 'beePOSmobile'], function() {
+    Route::get('test',function() {
+        return 'ASDF';
+    });
+}); 

@@ -127,10 +127,7 @@
 </head>
 <body>
     <div id="app">
-        
-        <div class="login-page">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
 </body>
 

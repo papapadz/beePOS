@@ -7,9 +7,10 @@ use App\Shop;
 class ShopController extends Controller
 {
     public function index($shop) {
+        return view('pages.shop.index')->with('shop',$this->getShopObj($shop));
+    }
 
-        $shopObj = Shop::where('shop_code',$shop)->first();
-        
-        return view('pages.shop.index')->with('shop',$shopObj);
+    public function getShopObj($shop) {
+        return Shop::where('shop_code',$shop)->first();
     }
 }
