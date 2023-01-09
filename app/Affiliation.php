@@ -18,7 +18,7 @@ class Affiliation extends Model
     }
 
     public function shop() {
-        return $this->hasOne(Shop::class,'id','shop_id');
+        return $this->hasOne(Shop::class,'id','shop_id')->with('products');
     }
 
     public function role() {
