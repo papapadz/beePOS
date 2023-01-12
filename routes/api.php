@@ -24,10 +24,15 @@ Route::group(['prefix' => '{shop}'], function() {
     });
 });
 
-Route::group(['prefix' => 'beePOSmobile'], function() {
-    Route::get('test',function() {
-        return 'ASDF';
-    });
-    
-    Route::get('login', 'APIController@mobileLogin')->middleware('cors');
-}); 
+Route::group([
+    'prefix' => 'beePOSmobile',
+    'middleware' => 'cors'], 
+    function() {
+        Route::get('test',function() {
+            return 'ASDF';
+        });
+        
+        Route::get('login', 'APIController@mobileLogin');
+        Route::get('sales/save','APICOntroller@mobileSalesSave');
+    }
+); 

@@ -14,4 +14,8 @@ class APIController extends Controller
             return User::with('person','affiliation')->find(Auth::id());
         }
     }
+
+    public function mobileSalesSave(Request $request) {
+        
+    }
 }
